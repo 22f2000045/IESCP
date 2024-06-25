@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    LOGIN PAGE
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-1">Existing user login</h1>
+    <form method="POST" action="{{url_for('login')}}" class="my-form">
+        <div class="form-group">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" name ="username" required class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" name ="password" required class="form-control">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+    </form>
+{% endblock %}

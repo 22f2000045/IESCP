@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsor Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .status-badge {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <!-- Include the navigation bar -->
+    {% include 'sponsor_navbar.html' %}
+    
+    <div class="container mt-4">
+        <h2>Welcome, Sponsor Name</h2>
+        
+        <h3 class="mt-4">Active Campaigns</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Campaign Name 1
+                        <span class="badge badge-success status-badge">Active</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Brief description of the campaign.</p>
+                        <p class="card-text"><small>Completion: 50%</small></p>
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Campaign Name 2
+                        <span class="badge badge-secondary status-badge">Completed</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Brief description of the campaign.</p>
+                        <p class="card-text"><small>Completion: 100%</small></p>
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Campaign Name 3
+                        <span class="badge badge-warning status-badge">Ongoing</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Brief description of the campaign.</p>
+                        <p class="card-text"><small>Completion: 75%</small></p>
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h3 class="mt-4">Ad Requests</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Ad Request 1
+                        <span class="badge badge-success status-badge">Pending</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Brief description of the ad request.</p>
+                        <p class="card-text"><small>Budget: $1000</small></p>
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Ad Request 2
+                        <span class="badge badge-secondary status-badge">Approved</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Brief description of the ad request.</p>
+                        <p class="card-text"><small>Budget: $1500</small></p>
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Ad Request 3
+                        <span class="badge badge-warning status-badge">Rejected</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Brief description of the ad request.</p>
+                        <p class="card-text"><small>Budget: $500</small></p>
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
