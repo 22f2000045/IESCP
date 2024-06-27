@@ -12,96 +12,49 @@
     </style>
 </head>
 <body>
-    <!-- Include the navigation bar -->
     {% include 'sponsor_navbar.html' %}
     
     <div class="container mt-4">
-        <h2>Welcome, Sponsor Name</h2>
+        <h2>Welcome, {{ sponsor.company_name }}</h2>
         
         <h3 class="mt-4">Active Campaigns</h3>
         <div class="row">
+            {% for campaign in campaigns %}
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        Campaign Name 1
-                        <span class="badge badge-success status-badge">Active</span>
+                        {{ campaign.name }}
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Brief description of the campaign.</p>
-                        <p class="card-text"><small>Completion: 50%</small></p>
-                        <a href="#" class="btn btn-primary">View Details</a>
+                        <p class="card-text">{{ campaign.description }}</p>
+                        <p class="card-text"><small>Start Date: {{ campaign.start_date }}</small></p>
+                        <p class="card-text"><small>End Date: {{ campaign.end_date }}</small></p>
+                        <p class="card-text"><small>Completion: {{ campaign.completion_percentage }}%</small></p>
+                        <a href="{{ url_for('campaign_details', campaign_id=campaign.id) }}" class="btn btn-primary">View Details</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        Campaign Name 2
-                        <span class="badge badge-secondary status-badge">Completed</span>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">Brief description of the campaign.</p>
-                        <p class="card-text"><small>Completion: 100%</small></p>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        Campaign Name 3
-                        <span class="badge badge-warning status-badge">Ongoing</span>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">Brief description of the campaign.</p>
-                        <p class="card-text"><small>Completion: 75%</small></p>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
         
-        <h3 class="mt-4">Ad Requests</h3>
+        <h3 class="mt-4">New Requests</h3>
         <div class="row">
+            {% for ad_request in ad_requests %}
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        Ad Request 1
-                        <span class="badge badge-success status-badge">Pending</span>
+                        Request for {{ ad_request.campaign.name }}
+                        <span class="badge badge-{{ ad_request.status_color }} status-badge">{{ ad_request.status }}</span>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Brief description of the ad request.</p>
-                        <p class="card-text"><small>Budget: $1000</small></p>
+                        <p class="card-text">{{ ad_request.requirements }}</p>
+                        <p class="card-text"><small>Influencer: {{ ad_request.influencer.name }}</small></p>
+                        <p class="card-text"><small>Payment Amount: ${{ ad_request.payment_amount }}</small></p>
                         <a href="#" class="btn btn-primary">View Details</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        Ad Request 2
-                        <span class="badge badge-secondary status-badge">Approved</span>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">Brief description of the ad request.</p>
-                        <p class="card-text"><small>Budget: $1500</small></p>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        Ad Request 3
-                        <span class="badge badge-warning status-badge">Rejected</span>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">Brief description of the ad request.</p>
-                        <p class="card-text"><small>Budget: $500</small></p>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 

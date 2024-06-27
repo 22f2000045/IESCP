@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Details</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    {% include 'sponsor_navbar.html' %}
+    
+    <div class="container mt-4">
+        <h2>Campaign Details</h2>
+        <div class="card">
+            <div class="card-header">
+                {{ campaign.name }}
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ campaign.description }}</p>
+                <p class="card-text"><small>Start Date: {{ campaign.start_date }}</small></p>
+                <p class="card-text"><small>End Date: {{ campaign.end_date }}</small></p>
+                <p class="card-text"><small>Budget: ${{ campaign.budget }}</small></p>
+                <p class="card-text"><small>Visibility: {{ campaign.visibility.value }}</small></p>
+                <p class="card-text"><small>Goals: {{ campaign.goals }}</small></p>
+            </div>
+        </div>
+
+        <h3 class="mt-4">Ad Requests</h3>
+        <div class="row">
+            {% for ad_request in ad_requests %}
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Ad Request from {{ ad_request.influencer.name }}
+                        <span class="badge badge-{{ ad_request.status_color }} status-badge">{{ ad_request.status.value }}</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ ad_request.requirements }}</p>
+                        <p class="card-text"><small>Payment Amount: ${{ ad_request.payment_amount }}</small></p>
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <a href="{{ url_for('add_ad_request', campaign_id=campaign.id) }}" class="btn btn-success mt-4">Add Ad Request</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
