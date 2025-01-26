@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Find Campaigns{% endblock %}
+
+{% block content %}
+    <h1>Find Campaigns</h1>
+    <form method="POST" action="{{ url_for('find_campaign') }}">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="min_budget">Minimum Budget</label>
+                <input type="number" class="form-control" id="min_budget" name="min_budget" placeholder="Enter minimum budget">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="max_budget">Maximum Budget</label>
+                <input type="number" class="form-control" id="max_budget" name="max_budget" placeholder="Enter maximum budget">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <div class="row mt-4">
+        {% for campaign in campaigns %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ campaign.name }}</h5>
+                        <p class="card-text">{{ campaign.description }}</p>
+                        {% if campaign.flagged %}
+                            <p class="text-danger">Flagged by Admin</p>
+                        {% endif %}
+                        <a href="{{ url_for('campaign_details', campaign_id=campaign.id) }}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

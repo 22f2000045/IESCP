@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Influencer Ad Requests{% endblock %}
+
+{% block content %}
+    <h3>Ad Requests from Sponsors</h3>
+    <div class="row">
+        {% for ad_request in ad_requests if not ad_request.created_by_influencer and ad_request.influencer_id == user.influencer[0].id %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    Ad Request from {{ ad_request.campaign.sponsor.company_name }}
+                    <span class="badge badge-{{ ad_request.status_color }} status-badge">{{ ad_request.status.value }}</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ ad_request.requirements }}</p>
+                    <p class="card-text"><small>Payment Amount: ${{ ad_request.payment_amount }}</small></p>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <form action="{{ url_for('accept_ad_request', ad_request_id=ad_request.id) }}" method="POST">
+                            <button type="submit" class="btn btn-success {% if ad_request.status.value != 'pending' %}disabled{% endif %}">Accept</button>
+                        </form>
+                        <form action="{{ url_for('reject_ad_request', ad_request_id=ad_request.id) }}" method="POST">
+                            <button type="submit" class="btn btn-danger {% if ad_request.status.value != 'pending' %}disabled{% endif %}">Reject</button>
+                        </form>
+                        <form action="{{ url_for('negotiation', ad_request_id=ad_request.id) }}" method="POST">
+                            <button type="submit" class="btn btn-primary {% if ad_request.status.value != 'pending' %}disabled{% endif %}">Negotiate</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="mt-4">Ad Requests Created by You</h3>
+    <div class="row">
+        {% for ad_request in ad_requests if ad_request.created_by_influencer and ad_request.influencer_id == user.influencer[0].id %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    Ad Request from You
+                    <span class="badge badge-{{ ad_request.status_color }} status-badge">{{ ad_request.status.value }}</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ ad_request.requirements }}</p>
+                    <p class="card-text"><small>Payment Amount: ${{ ad_request.payment_amount }}</small></p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <a href="{{ url_for('edit_ad_request', campaign_id=ad_request.campaign_id, ad_request_id=ad_request.id) }}" class="btn btn-warning mt-1 {% if ad_request.status.value != 'pending' %}disabled{% endif %}">Edit</a>
+                    <a href="{{ url_for('negotiation', ad_request_id=ad_request.id) }}" class="btn btn-primary {% if ad_request.status.value != 'pending' %}disabled{% endif %}">Negotiate</a>
+                    <form action="{{ url_for('delete_ad_request', campaign_id=ad_request.campaign_id, ad_request_id=ad_request.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this ad request?');">
+                        <button type="submit" class="btn btn-danger mt-1 {% if ad_request.status.value == 'accepted' %}disabled{% endif %}">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

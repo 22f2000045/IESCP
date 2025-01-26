@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Negotiation{% endblock %}
+
+{% block content %}
+    <h2>Negotiation for Ad Request #{{ ad_request.id }}</h2>
+    
+    {% if is_receiver %}
+        <form action="{{ url_for('negotiation', ad_request_id=ad_request.id) }}" method="POST">
+            <div class="form-group">
+                <label for="proposed_price">Propose New Price</label>
+                <input type="number" class="form-control" id="proposed_price" name="proposed_price" step="0.01" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Proposal</button>
+        </form>
+    {% elif not is_receiver %}
+        <p>You can only respond to proposals, not create new ones.</p>
+    {% endif %}
+    
+    <h3 class="mt-4">Negotiation History</h3>
+    <div class="list-group">
+        {% for negotiation in negotiations %}
+            <div class="list-group-item">
+                <strong>{{ negotiation.sender.username }}:</strong> Proposed Price: ${{ negotiation.proposed_price }}
+                <span class="badge badge-{{ negotiation.status_color }}">{{ negotiation.status.value }}</span>
+                <small class="text-muted float-right">{{ negotiation.timestamp }}</small>
+                {% if not is_receiver and negotiation.status.value == "pending" %}
+                    <form action="{{ url_for('respond_negotiation', negotiation_id=negotiation.id) }}" method="POST" class="mt-2">
+                        <button type="submit" name="response" value="accept" class="btn btn-success btn-sm">Accept</button>
+                        <button type="submit" name="response" value="reject" class="btn btn-danger btn-sm">Reject</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

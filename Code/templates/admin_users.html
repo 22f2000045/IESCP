@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Users{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Users</h2>
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Flagged</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for user in users %}
+                    <tr>
+                      <td>{{ user.id }}</td>
+                      <td>{{ user.username }}</td>
+                      <td>{{ user.role.value }}</td>
+                      <td>
+                        {% if user.flagged %}
+                          <span class="badge badge-danger">Flagged</span>
+                        {% else %}
+                          <span class="badge badge-success">Not Flagged</span>
+                        {% endif %}
+                      </td>
+                      <td>
+                        <a href="{{ url_for('flag_user', user_id=user.id) }}" class="btn btn-sm btn-warning">Flag</a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

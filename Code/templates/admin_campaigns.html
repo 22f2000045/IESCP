@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Campaigns{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Campaigns</h2>
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Sponsor</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Budget</th>
+                        <th>Flagged</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for campaign in campaigns %}
+                        <tr>
+                          <td>{{ campaign.id }}</td>
+                          <td>{{ campaign.name }}</td>
+                          <td>{{ campaign.sponsor.company_name }}</td>
+                          <td>{{ campaign.start_date }}</td>
+                          <td>{{ campaign.end_date }}</td>
+                          <td>{{ campaign.budget }}</td>
+                          <td>
+                            {% if campaign.flagged %}
+                              <span class="badge badge-danger">Flagged</span>
+                            {% else %}
+                              <span class="badge badge-success">Not Flagged</span>
+                            {% endif %}
+                          </td>
+                          <td>
+                            <a href="{{ url_for('flag_campaign', campaign_id=campaign.id) }}" class="btn btn-sm btn-warning">Flag</a>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

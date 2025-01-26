@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Campaigns{% endblock %}
+
+{% block content %}
+    <h2>Your Campaigns</h2>
+    <div class="row">
+        {% for campaign in campaigns %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    {{ campaign.name }}
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ campaign.description }}</p>
+                    <p class="card-text"><small>Start Date: {{ campaign.start_date }}</small></p>
+                    <p class="card-text"><small>End Date: {{ campaign.end_date }}</small></p>
+                    <p class="card-text"><small>Budget: ${{ campaign.budget }}</small></p>
+                    <p class="card-text"><small>Completion: {{ campaign.completion_percentage }}%</small></p>
+                    <a href="{{ url_for('campaign_details', campaign_id=campaign.id) }}" class="btn btn-primary">Campaign Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="{{ url_for('add_campaign') }}" class="btn btn-success mt-4">Add New Campaign</a>
+{% endblock %}

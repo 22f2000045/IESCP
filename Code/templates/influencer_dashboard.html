@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}Influencer Dashboard{% endblock %}
+
+{% block styles %}
+    <style>
+        .chart-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Welcome, {{ influencer.name }}!</h2>
+    <p>Use the navigation bar to manage your campaigns and ad requests.</p>
+    
+    <div class="row">
+        <div class="col-md-4 chart-container">
+            <canvas id="adRequestSourceChart"></canvas>
+        </div>
+        <div class="col-md-4 chart-container">
+            <canvas id="adRequestsChart"></canvas>
+        </div>
+        <div class="col-md-4 chart-container">
+            <canvas id="adRequestStatusChart"></canvas>
+        </div>
+    </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const adRequestSourceData = {{ ad_request_source_data | tojson }};
+            const adRequestsData = {{ ad_requests_data | tojson }};
+            const adRequestStatusData = {{ ad_request_status_data | tojson }};
+
+            // Number of Ad Requests Created by Influencer vs Sponsors
+            const ctx1 = document.getElementById('adRequestSourceChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['Created by Influencer', 'Created by Sponsors'],
+                    datasets: [{
+                        label: 'Ad Request Source',
+                        data: [adRequestSourceData.influencer, adRequestSourceData.sponsor],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(75, 192, 192, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Number of Ad Requests in Each Campaign Chart
+            const ctx2 = document.getElementById('adRequestsChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: adRequestsData.labels,
+                    datasets: [{
+                        label: 'Number of Ad Requests',
+                        data: adRequestsData.data,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Ad Request Status Chart
+            const ctx3 = document.getElementById('adRequestStatusChart').getContext('2d');
+            new Chart(ctx3, {
+                type: 'pie',
+                data: {
+                    labels: adRequestStatusData.labels,
+                    datasets: [{
+                        label: 'Ad Requests by Status',
+                        data: adRequestStatusData.data,
+                        backgroundColor: [
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 99, 132, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        });
+    </script>
+{% endblock %}

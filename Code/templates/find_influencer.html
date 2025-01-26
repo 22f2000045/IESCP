@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Find Influencer{% endblock %}
+
+{% block content %}
+    <h1>Find Influencer</h1>
+    <form method="POST" action="{{ url_for('find_influencer') }}">
+        <div class="form-group">
+            <label for="search">search</label>
+            <input type="text" class="form-control" id="niche" name="niche" placeholder="Enter niche or reach">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <div class="mt-4">
+        <h2>Influencers</h2>
+        {% if influencers %}
+            <ul class="list-group">
+                {% for influencer in influencers %}
+                    <li class="list-group-item">
+                        <p><strong>Name:</strong> {{ influencer.name }}</p>
+                        <p><strong>Category:</strong> {{ influencer.category }}</p>
+                        <p><strong>Niche:</strong> {{ influencer.niche }}</p>
+                        <p><strong>Reach:</strong> {{ influencer.reach }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No influencers found for the specified criteria.</p>
+        {% endif %}
+    </div>
+{% endblock %}

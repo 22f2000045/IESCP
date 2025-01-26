@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block style %}
+<style>
+    .fullscreen-image-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+    }
+    .fullscreen-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="fullscreen-image-container">
+        <img src="{{ url_for('static', filename='home.png') }}" alt="Home Page Image">
+    </div>
+{% endblock %}
